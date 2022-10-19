@@ -1,0 +1,19 @@
+name: Betterelytra
+version: 1.0
+main: me.minercoffee.betterelytra.Main
+api-version: 1.19
+load: STARTUP
+authors: [ MinerCoffee ]
+description: Better elytra with custom recipe, custom name, fall resistance, customize config
+website: https://discord.gg/HHFSdmZZW2
+commands:
+  updater:
+   usage: /<command>
+  elytra:
+   usage: /<command> give
+  bereload:
+    usage:  /<command>
+permissions:
+  BetterElytra.staff:
+    description: used for staff/admin commands
+    default: false

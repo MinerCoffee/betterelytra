@@ -1,0 +1,17 @@
+name: '&l&8Charcoal Elytra'
+recipe: #You can change the material used.
+  #FULL BLOCK NAME LIST: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  #You may have to restart the server to update ingredients.
+  ingredients_A: 'DRAGON_BREATH'
+  ingredients_B: 'NETHERITE_INGOT'
+  ingredients_C: 'ELYTRA'
+  ingredients_D: 'NETHER_STAR'
+  shape:
+    - 'BAB'
+    - 'ACA'
+    - 'DAD'
+remove_recipe: false
+speed: 2.5
+cooldown: 10 #seconds
+permissions:
+  BetterElytra.staff #Used for the give elytra command
