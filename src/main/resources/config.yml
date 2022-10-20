@@ -13,5 +13,9 @@ recipe: #You can change the material used.
 remove_recipe: false
 speed: 2.5
 cooldown: 10 #seconds
+messages:
+  launch: "&4&lYou are taking off! &r&l&8&nPress Shift to boost yourself!"
+  cooldown: "&8&lYou cannot boost yet"
+texture-link: "https://www.dropbox.com/sh/gl3vifm2pal1hxr/AAA-U-1deNQrOn2HLWaosgqVa?dl=1"
 permissions:
   BetterElytra.staff #Used for the give elytra command

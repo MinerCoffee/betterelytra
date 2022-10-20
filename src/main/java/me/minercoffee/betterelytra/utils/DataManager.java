@@ -3,6 +3,8 @@ package me.minercoffee.betterelytra.utils;
 import me.minercoffee.betterelytra.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,10 +19,11 @@ public class DataManager {
     private File configFile = null;
 
 
-    public DataManager(Main plugin){
+    public DataManager(@NotNull Main plugin){
         this.plugin = plugin;
         //saves/initializes
         saveDefaultConfig();
+        loadFromResource("config.yml", new File(plugin.getDataFolder(), "config.yml"));
     }
 
     public void reloadConfig(){
@@ -56,4 +59,25 @@ public class DataManager {
             this.plugin.saveResource("config.yml", false);
         }
     }
-}
+        public static @Nullable FileConfiguration loadFromResource(String resourceName, @NotNull File out){
+            try {
+                InputStream in = Main.getPlugin().getResource(resourceName);
+
+                if (!out.exists()){
+                    Main.getPlugin().getDataFolder().mkdir();
+                    out.createNewFile();
+                }
+                FileConfiguration file = YamlConfiguration.loadConfiguration(out);
+                if (in != null){
+                    InputStreamReader inReader =  new InputStreamReader(in);
+                    file.setDefaults(YamlConfiguration.loadConfiguration(inReader));
+                    file.options().copyDefaults(true);
+                    file.save(out);
+                }
+                return file;
+            } catch (IOException ex){
+                ex.printStackTrace();
+                return null;
+            }
+        }
+    }

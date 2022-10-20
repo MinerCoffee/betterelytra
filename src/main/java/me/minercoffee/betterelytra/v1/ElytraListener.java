@@ -4,6 +4,7 @@ import me.minercoffee.betterelytra.Main;
 import me.minercoffee.betterelytra.utils.ColorMsg;
 import me.minercoffee.betterelytra.utils.ItemBuilder;
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,6 +59,7 @@ public class ElytraListener implements Listener {
     @EventHandler
     public void boost(@NotNull PlayerMoveEvent e) {
         Player p = e.getPlayer();
+        ConfigurationSection config = Main.getPlugin().getConfig();
         ParticleData particleData = new ParticleData(p.getUniqueId());
         Effects trails = new Effects(p);
         if (p.isGliding()) {
@@ -65,7 +67,7 @@ public class ElytraListener implements Listener {
                 if (itemBuilder.hasCharcoalElytra(p)) {
                     if (this.cooldowns.containsKey(p) && this.cooldowns.get(p) > System.currentTimeMillis()) {
                         particleData.stop();
-                        p.sendMessage(ColorMsg.color("&5&lYou cannot boost yet"));
+                        p.sendMessage(ColorMsg.color(config.getString("messages.cooldown")));
                     } else {
                         p.spawnParticle(Particle.ASH, p.getLocation(), 30, 2, 0, 2, 1);
                         this.cooldowns.put(p, System.currentTimeMillis() + (long) getCooldown());
@@ -96,6 +98,12 @@ public class ElytraListener implements Listener {
             }
         }.runTaskTimerAsynchronously(plugin, 0, 5); //every half a second
     }*/
+
+    @EventHandler
+    public void onJoin(@NotNull PlayerJoinEvent e) {
+       e.getPlayer().setResourcePack("https://www.dropbox.com/sh/gl3vifm2pal1hxr/AAA-U-1deNQrOn2HLWaosgqVa?dl=1"); //direct download to your texture pack
+
+    }
 
     @EventHandler
     public void launch(@NotNull PlayerStatisticIncrementEvent e) {

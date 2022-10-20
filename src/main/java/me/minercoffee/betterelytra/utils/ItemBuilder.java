@@ -37,7 +37,15 @@ public class ItemBuilder {
         PlayerInventory inventory = p.getInventory();
         ItemStack chest = inventory.getChestplate();
         if (chest == null) return true;
-        if (chest.getItemMeta().hasCustomModelData()) return true;
+        if (!chest.getItemMeta().hasCustomModelData()) {
+            if (chest.clone().isSimilar(Elytra) || chest.isSimilar(Elytra)){
+                ItemMeta meta = Elytra.getItemMeta();
+                if (meta != null) {
+                    meta.setCustomModelData(1997);
+                    Elytra.setItemMeta(meta);
+                }
+            }
+        }
         if (chest.getItemMeta().getCustomModelData() == 1997) return true;
         if (chest.clone().isSimilar(Elytra) || chest.isSimilar(Elytra)) return true;
         return chest.isSimilar(Elytra) || inventory.contains(Elytra);

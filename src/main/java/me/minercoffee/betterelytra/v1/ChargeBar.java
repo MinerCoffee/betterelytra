@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -19,7 +20,7 @@ public class ChargeBar {
     public static ArrayList<Player> charged = new ArrayList<>();
     public static int task;
 
-    public ChargeBar(Main plugin) {
+    public ChargeBar() {
     }
     public static void run(Player p) {
         chargeBar = Bukkit.createBossBar("", BarColor.BLUE, BarStyle.SOLID);
@@ -53,7 +54,8 @@ public class ChargeBar {
         }, 0L, 1L);
     }
     private static void runWhenFull(@NotNull Player p) {
-        p.sendMessage(ColorMsg.color("&4&lYou are taking off! &r&l&5Press Shift to boost yourself!"));
+        ConfigurationSection config = Main.getPlugin().getConfig();
+        p.sendMessage(ColorMsg.color(config.getString("messages.launch")));
         p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 10, 0, false, false, false));
         p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 10, 0, false, false, false));
         p.spawnParticle(Particle.ELECTRIC_SPARK, p.getLocation(), 80, 5, 10, 5);

@@ -13,6 +13,7 @@ import me.minercoffee.betterelytra.v1.ElytraListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.RecipeChoice;
@@ -20,8 +21,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,6 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import static org.spigotmc.SpigotConfig.config;
-
 
 public final class Main extends JavaPlugin implements Listener {
     public DataManager data;
@@ -62,8 +60,9 @@ public final class Main extends JavaPlugin implements Listener {
         itemBuilder.init();
         ServerUtils();
         Recipes();
+        updateConfig();
         try {
-            new UpdateChecker(this, UpdateCheckSource.CUSTOM_URL, "https://github.com/MinerCoffee/betterelytra/blob/master/src/main/resources/latestversion.txt")
+            new UpdateChecker(this, UpdateCheckSource.CUSTOM_URL, "https://github.com/MinerCoffee/betterelytra/blob/master/src/main/resources/lastestversion.txt")
                     .setDownloadLink("https://discord.com/channels/941600403513040916/941600403513040919")
                     .setChangelogLink("https://discord.gg/5nDbUY2qFy")
                     .setDonationLink("https://www.paypal.com/paypalme/MinerCoffee")
@@ -123,6 +122,13 @@ public final class Main extends JavaPlugin implements Listener {
             return map;
         }));
     }
+    public void updateConfig(){
+        ConfigurationSection config = getConfig();
+        config.addDefault("messages", "");
+        config.addDefault("messages.launch", "&4&lYou are taking off! &r&l&8&nPress Shift to boost yourself!");
+        config.addDefault("messages.cooldown", "&8&lYou cannot boost yet");
+        saveConfig();
+    }
 
     public static boolean checkPlayerperms(@NotNull Player p) {
         return p.hasPermission("BetterElytra.staff") || p.isOp();
@@ -132,4 +138,3 @@ public final class Main extends JavaPlugin implements Listener {
     public void onDisable() {
     }
 }
-

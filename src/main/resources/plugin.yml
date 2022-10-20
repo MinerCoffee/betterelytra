@@ -9,11 +9,14 @@ website: https://discord.gg/HHFSdmZZW2
 commands:
   updater:
    usage: /<command>
+   description: checks for an update in-game.
   elytra:
    usage: /<command> give
+   description: gives the elytra to the player.
   bereload:
     usage:  /<command>
+    description: reloads the config.yml.
 permissions:
   BetterElytra.staff:
-    description: used for staff/admin commands
+    description: used for staff/admin commands.
     default: false
