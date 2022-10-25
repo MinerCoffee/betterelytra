@@ -17,14 +17,14 @@ public class ItemBuilder {
     public void init(){
         getElytra();
     }
-    public  ItemStack getElytra() {
+    public ItemStack getElytra() {
         ItemStack item = new ItemStack(Material.ELYTRA, 1);
         ItemMeta meta = item.getItemMeta();
         String name = Main.getPlugin().getConfig().getString("name");
         if (meta != null) {
             meta.setDisplayName(ColorMsg.color(name));
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(ColorMsg.color("&2Crouch &7& &2Jump &7 to Launch into the Air."));
+            lore.add(ColorMsg.color("&2Crouch &7& &2Jump &7to Launch into the Air."));
             lore.add(ColorMsg.color("&7Press &2Shift &7While Flying To Boost."));
             meta.setLore(lore);
             meta.setCustomModelData(1997);

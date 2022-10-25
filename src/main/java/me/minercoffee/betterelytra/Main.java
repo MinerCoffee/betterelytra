@@ -3,6 +3,7 @@ package me.minercoffee.betterelytra;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 import com.jeff_media.updatechecker.UserAgentBuilder;
+import me.minercoffee.betterelytra.admin.Craft;
 import me.minercoffee.betterelytra.admin.give;
 import me.minercoffee.betterelytra.admin.reload;
 import me.minercoffee.betterelytra.utils.DataManager;
@@ -51,6 +52,7 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         setInstance(this);
         PluginManager pm = getServer().getPluginManager();
+        new Craft(this);
         pm.registerEvents(this, Main.this);
         new ElytraListener(this);
         getCommand("updater").setExecutor(new UpdateCheckCommand());

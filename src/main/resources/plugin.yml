@@ -16,6 +16,9 @@ commands:
   bereload:
     usage:  /<command>
     description: reloads the config.yml.
+  bcraft:
+    usage:  /<command>
+    description: opens the crafting bench
 permissions:
   BetterElytra.staff:
     description: used for staff/admin commands.

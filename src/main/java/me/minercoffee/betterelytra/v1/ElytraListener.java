@@ -11,8 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.AnvilInventory;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -81,24 +83,6 @@ public class ElytraListener implements Listener {
             particleData.stop();
         }
     }
-/*    private void Spiral(final @NotNull Player p){
-        Location location = p.getLocation();
-        int radius = 2;
-
-        final double[] locationY = {0};
-
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                //Calculate the X and Z offset depending on the Y
-                double x = radius * Math.cos(locationY[0]);
-                double z = radius * Math.sin(locationY[0]);
-                p.spawnParticle(Particle.REDSTONE, location.add(x, locationY[0], z), 50, new Particle.DustOptions(Color.GRAY, 6.0F));
-                locationY[0] = locationY[0] + 0.1;
-            }
-        }.runTaskTimerAsynchronously(plugin, 0, 5); //every half a second
-    }*/
-
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
        e.getPlayer().setResourcePack("https://www.dropbox.com/sh/gl3vifm2pal1hxr/AAA-U-1deNQrOn2HLWaosgqVa?dl=1"); //direct download to your texture pack
@@ -184,5 +168,58 @@ public class ElytraListener implements Listener {
             player.updateInventory();
             player.closeInventory();
         }
+    }
+    @EventHandler
+    public void onPrepareCraft(@NotNull PrepareItemCraftEvent e){
+        ItemStack A = plugin.getConfig().getItemStack("recipe.ingredients_A");
+        ItemStack B = plugin.getConfig().getItemStack("recipe.ingredients_B");
+        ItemStack C = plugin.getConfig().getItemStack("recipe.ingredients_C");
+        ItemStack D = plugin.getConfig().getItemStack("recipe.ingredients_D");
+        ItemStack result = itemBuilder.getElytra();
+        if (e.getInventory().getMatrix().length < 9){
+            return;
+        }
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(0, B);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(1, A);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(2, B);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(3, A);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(4, C);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(5, A);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(6, D);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(7, A);
+        }});
+        checkCraft(result, e.getInventory(), new HashMap<>() {{
+            put(8, D);
+        }});
+    }
+    public void checkCraft(ItemStack result, @NotNull CraftingInventory inv, HashMap<Integer, ItemStack> ingredients){
+        ItemStack[] matrix = inv.getMatrix();
+        for (int i = 0; i <9; i++){
+            if (ingredients.containsKey(i)){
+                if (matrix[i] == null || !matrix[i].equals(ingredients.get(i))){
+                    return;
+                }
+            } else {
+                if (matrix[i] != null) {
+                    return;
+                }
+            }
+        }
+        inv.setResult(result);
     }
 }
