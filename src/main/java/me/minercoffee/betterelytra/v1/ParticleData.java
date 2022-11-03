@@ -30,7 +30,7 @@ public class ParticleData {
         if (getID() == 1) return;
         Bukkit.getScheduler().cancelTask(getID());
     }
-    public  boolean hasFakeID(UUID uuid){
+    public boolean hasFakeID(UUID uuid){
         if (Trails.containsKey(uuid)){
             return Trails.get(uuid) == 1;
         }

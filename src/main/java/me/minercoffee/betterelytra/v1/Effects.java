@@ -7,7 +7,6 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 public class Effects {
-
     private int taskID;
     private final Player player;
 
@@ -49,8 +48,8 @@ public class Effects {
                 first = loc.clone().add(Math.cos(var), Math.sin(var) + 1, Math.sin(var));
                 second = loc.clone().add(Math.cos(var + Math.PI), Math.sin(var) + 1, Math.sin(var + Math.PI));
 
-                player.getWorld().spawnParticle(Particle.SMOKE_LARGE, first, 0);
-                player.getWorld().spawnParticle(Particle.SMALL_FLAME, second, 0);
+                player.getWorld().spawnParticle(Particle.SMOKE_LARGE, first, 3);
+                player.getWorld().spawnParticle(Particle.SMALL_FLAME, second, 3);
             }
         }, 0 ,1); //changes the speed
     }

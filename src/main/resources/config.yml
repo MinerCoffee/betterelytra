@@ -6,10 +6,18 @@ recipe: #You can change the material used.
   ingredients_B: 'NETHERITE_INGOT'
   ingredients_C: 'ELYTRA'
   ingredients_D: 'NETHER_STAR'
-  shape:
-    - 'BAB'
-    - 'ACA'
-    - 'DAD'
+  ingredients_E: 'CLOCK'
+ingame_editor: #represents the matrix for the crafting bench. The index is the slot of the crafting bench and the item that is in it.
+  enable: false
+  index_0:
+  index_1:
+  index_2:
+  index_3:
+  index_4:
+  index_5:
+  index_6:
+  index_7:
+  index_8:
 remove_recipe: false
 speed: 2.5
 cooldown: 10 #seconds

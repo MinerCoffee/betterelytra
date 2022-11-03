@@ -17,17 +17,14 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.util.Arrays;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import static org.spigotmc.SpigotConfig.config;
 
@@ -78,30 +75,24 @@ public final class Main extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
     }
-    public void Recipes(){
+    public void Recipes() {
         NamespacedKey elytrav1 = new NamespacedKey(this, "CharcoalElytrakeyv1");
-        ShapedRecipe elytra = new ShapedRecipe(elytrav1, itemBuilder.getElytra());
-        List<String> shape = config.isSet("recipe.shape") ? config.getStringList("recipe.shape") : Arrays.asList("BAB", "ACA", "DAD");
-        elytra.shape(shape.toArray(new String[3]));
-        if (config.isSet("recipe")) {
-            for (String key : getConfig().getConfigurationSection("recipe").getKeys(false)) {
-                if (config.get("recipe" + key) instanceof String) {
-                    elytra.setIngredient(key.charAt(0), Material.valueOf(String.valueOf(getConfig().getItemStack("recipe" + key))));
-                } else {
-                    elytra.setIngredient(key.charAt(0),
-                            new RecipeChoice.MaterialChoice(config.getStringList("recipe" + key).stream()
-                                    .map(Material::valueOf).collect(Collectors.toList())));
-                }
+        ShapelessRecipe elytra = new ShapelessRecipe(elytrav1, itemBuilder.getElytra());
+        try {
+            if (!config.getBoolean("ingame_editor")) {
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_A")));
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_B")));
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_C")));
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_D")));
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_D")));
+                elytra.addIngredient(Material.valueOf(plugin.getConfig().getString("recipe.ingredients_E")));
+                plugin.saveConfig();
+                getServer().addRecipe(elytra);
+                data.reloadConfig();
             }
-        } else {
-            elytra.setIngredient('A', Material.valueOf(plugin.getConfig().getString("recipe.ingredients_A")));
-            elytra.setIngredient('B', Material.valueOf(plugin.getConfig().getString("recipe.ingredients_B")));
-            elytra.setIngredient('C', Material.valueOf(plugin.getConfig().getString("recipe.ingredients_C")));
-            elytra.setIngredient('D', Material.valueOf(plugin.getConfig().getString("recipe.ingredients_D")));
-            plugin.saveConfig();
-            getServer().addRecipe(elytra);
-            data.reloadConfig();
-        }
+        }catch(IllegalArgumentException exception){
+                exception.printStackTrace();
+            }
     }
     public void ServerUtils() {
         int pluginId = 16692;
@@ -135,7 +126,6 @@ public final class Main extends JavaPlugin implements Listener {
     public static boolean checkPlayerperms(@NotNull Player p) {
         return p.hasPermission("BetterElytra.staff") || p.isOp();
     }
-
     @Override
     public void onDisable() {
     }
